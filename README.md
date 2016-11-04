@@ -1,2 +1,2 @@
-# configuration_management_slides
+# Configuration Management Slides
 Slides from configuration management talk
