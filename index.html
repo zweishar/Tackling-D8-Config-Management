@@ -4,10 +4,10 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>reveal.js</title>
+		<title>Tackling D8 Config Management</title>
 
 		<link rel="stylesheet" href="css/reveal.css">
-		<link rel="stylesheet" href="css/theme/black.css">
+		<link rel="stylesheet" href="css/theme/solarized.css">
 
 		<!-- Theme used for syntax highlighting of code -->
 		<link rel="stylesheet" href="lib/css/zenburn.css">
@@ -24,8 +24,155 @@
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
+
+				<section>
+					<h2>Tackling Config Management in Drupal 8</h2>
+					<br />
+					<p>By Zach Weishar</p>
+				</section>
+
+				<section>
+					<h3>What can config managment do for you?</h3>
+					<section data-transition="slide">
+						<p>Traditionally, Drupal is composed of two parts</p>
+					</section>
+					<section data-transition="slide">
+						<p>Code</p>
+						<img data-src="img/code.svg" style="border:none;"/>
+						<p>Database</p>
+						<img data-src="img/database-1.svg" style="border:none;"/>
+					</section>
+					<section data-transition="slide">
+						<p>
+							In order to effectivley manage change in your application,
+							you need a way to control the state of both of these pieces.
+						</p>
+					</section>
+					<section data-transition="slide">
+						<p>
+							Managing change in code is relativley easy through the use of
+							a version control system (VCS), such as GIT.
+						</p>
+					</section>
+					<section data-transition="slide">
+						<p>
+							Unfortunatley the same is not true for the database. This is where
+							configuration mangment comes into play.
+						</p>
+					</section>
+					<section data-transition="slide">
+						<p>
+							Configuration managment allows you to effectivley control the state
+							of your database by exporting its configuration to code which can be
+							managed in your VCS of choice.
+						</p>
+					</section>
+					<section data-transition="slide">
+						<strong>This is valuable because:</strong>
+						<ul>
+							<li>
+								<p>You can easily deploy database updates between environments</p>
+							</li>
+							<li>
+								<p>You never loose vital changes to your database because its history is managed by your VCS.</p>
+							</li>
+						</ul>
+					</section>
+				</section>
+
+				<section>
+					<h3>Where we came from</h3>
+					<section data-transition="slide">
+						<p>In Drupal 7, configuration management is made possible by contributed modules, namely features and strong arm</p>
+					</section>
+					<section data-transition="slide">
+						<strong>This solution has treated us well for years, but it has some shortcomings:</strong>
+						<ul>
+							<li>
+								<p>
+									It lives in the contrib space, which means there is no centralized API in core for module developers to
+									rely on
+								</p>
+							</li>
+							<li>
+								<p>
+									Features was designed to bundle up small chunks of descrete site functionality, not act as full
+									configuration store for a complex site
+								</p>
+							</li>
+						</ul>
+					</section>
+					<section data-transition="slide">
+						<strong>This can often lead to frustration:</strong>
+						<ul>
+							<li><p>Configuration  becomes spread between multiple features modules, which makes it hard to keep track of</p></li>
+							<li><p>Features modules can have interlocking dependencies, which makes changes harder down the road.</p></li>
+							<li><p>Resolving merge conflicts in large features modules is tedious and very error prone</p></li>
+						</ul>
+					</section>
+				</section>
+
+				<section>
+
+					<h3>What is considered configuration in Drupal 8?</h3>
+					<section>
+						<p>There are four main categories of data in Drupal 8</p>
+					</section>
+
+					<section>
+						<strong>Content:</strong>
+						<p>
+							Information meant to be displayed on your site: articles, basic pages, images, files,
+							custom blocks, etc. Content is stored and accessed using
+							<a href="https://api.drupal.org/api/drupal/core%21lib%21Drupal%21Core%21Entity%21entity.api.php/group/entity_api/8.2.x">
+								Entities.
+							</a>
+						</p>
+					</section>
+
+					<section>
+						<strong>State:</strong>
+						<p>
+							Information of a temporary nature, generally machine-generated and not human-edited, about the current state of
+							your site. Examples: the time when Cron was last run, whether node access permissions need rebuilding, etc.
+						</p>
+					</section>
+
+					<section>
+						<strong>Use State API when:</strong>
+						<ul>
+							<li>It is specific to an individual environment.</li>
+							<li>You will never want to deploy it between environments.</li>
+							<li>You can reset a system, losing all state. Its configuration remains.</li>
+							<li>
+								So, use State API to store transient information, that is okay to lose after a reset.
+								Think: CSRF tokens, tracking when something non-critical last happened
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<strong>Session:</strong>
+						<p>
+							Information about individual users' interactions with the site, such as whether they are logged in. This is really
+							"state" information, but it is not stored the same way so it's a separate type . Session information is available
+							from the Request object.
+						</p>
+					</section>
+
+					<section>
+						<strong>Configuration:</strong>
+						<p>
+							Information about your site that is generally (or at least can be) human-edited, but is not Content, and is
+							meant to be relatively permanent. Examples: the name of your site, the content types and views you have defined, etc.
+						</p>
+					</section>
+
+				</section>
+
+
+
+
 			</div>
 		</div>
 
