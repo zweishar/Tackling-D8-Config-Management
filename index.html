@@ -33,41 +33,41 @@
 
 				<section>
 					<h3>What can config managment do for you?</h3>
-					<section data-transition="slide">
+					<section>
 						<p>Traditionally, Drupal is composed of two parts</p>
 					</section>
-					<section data-transition="slide">
+					<section>
 						<p>Code</p>
 						<img data-src="img/code.svg" style="border:none;"/>
 						<p>Database</p>
 						<img data-src="img/database-1.svg" style="border:none;"/>
 					</section>
-					<section data-transition="slide">
+					<section>
 						<p>
 							In order to effectivley manage change in your application,
 							you need a way to control the state of both of these pieces.
 						</p>
 					</section>
-					<section data-transition="slide">
+					<section>
 						<p>
 							Managing change in code is relativley easy through the use of
 							a version control system (VCS), such as GIT.
 						</p>
 					</section>
-					<section data-transition="slide">
+					<section>
 						<p>
 							Unfortunatley the same is not true for the database. This is where
 							configuration mangment comes into play.
 						</p>
 					</section>
-					<section data-transition="slide">
+					<section>
 						<p>
 							Configuration managment allows you to effectivley control the state
 							of your database by exporting its configuration to code which can be
 							managed in your VCS of choice.
 						</p>
 					</section>
-					<section data-transition="slide">
+					<section>
 						<strong>This is valuable because:</strong>
 						<ul>
 							<li>
@@ -82,10 +82,10 @@
 
 				<section>
 					<h3>Where we came from</h3>
-					<section data-transition="slide">
+					<section>
 						<p>In Drupal 7, configuration management is made possible by contributed modules, namely features and strong arm</p>
 					</section>
-					<section data-transition="slide">
+					<section>
 						<strong>This solution has treated us well for years, but it has some shortcomings:</strong>
 						<ul>
 							<li>
@@ -102,23 +102,24 @@
 							</li>
 						</ul>
 					</section>
-					<section data-transition="slide">
+					<section>
 						<strong>This can often lead to frustration:</strong>
 						<ul>
 							<li><p>Configuration  becomes spread between multiple features modules, which makes it hard to keep track of</p></li>
 							<li><p>Features modules can have interlocking dependencies, which makes changes harder down the road.</p></li>
-							<li><p>Resolving merge conflicts in large features modules is tedious and very error prone</p></li>
+							<li><p>Resolving merge conflicts in large features modules is tedious and error prone</p></li>
 						</ul>
+					</section>
+					<section>
+						<p>Features is not dead, but now it is free to fulfill its original purpose!</p>
 					</section>
 				</section>
 
 				<section>
-
 					<h3>What is considered configuration in Drupal 8?</h3>
 					<section>
 						<p>There are four main categories of data in Drupal 8</p>
 					</section>
-
 					<section>
 						<strong>Content:</strong>
 						<p>
@@ -129,7 +130,6 @@
 							</a>
 						</p>
 					</section>
-
 					<section>
 						<strong>State:</strong>
 						<p>
@@ -137,20 +137,18 @@
 							your site. Examples: the time when Cron was last run, whether node access permissions need rebuilding, etc.
 						</p>
 					</section>
-
 					<section>
 						<strong>Use State API when:</strong>
 						<ul>
-							<li>It is specific to an individual environment.</li>
-							<li>You will never want to deploy it between environments.</li>
-							<li>You can reset a system, losing all state. Its configuration remains.</li>
+							<li><p>It is specific to an individual environment.</p></li>
+							<li><p>You will never want to deploy it between environments.</p></li>
+							<li><p>You can reset a system, losing all state. Its configuration remains.</p></li>
 							<li>
-								So, use State API to store transient information, that is okay to lose after a reset.
-								Think: CSRF tokens, tracking when something non-critical last happened
+								<p>So, use State API to store transient information, that is okay to lose after a reset.
+								Think: CSRF tokens, tracking when something non-critical last happened</p>
 							</li>
 						</ul>
 					</section>
-
 					<section>
 						<strong>Session:</strong>
 						<p>
@@ -159,7 +157,6 @@
 							from the Request object.
 						</p>
 					</section>
-
 					<section>
 						<strong>Configuration:</strong>
 						<p>
@@ -167,9 +164,147 @@
 							meant to be relatively permanent. Examples: the name of your site, the content types and views you have defined, etc.
 						</p>
 					</section>
+				</section>
+
+				<section>
+					<h3>Things you should know about the CMS</h3>
+
+					<section>
+						<ul>
+							<li>
+								<p>
+									The CMS is designed to move configuration between different instances of the same site, not between two
+									separate sites.
+								</p>
+							</li>
+							<li>
+								<p>
+									What this means is that you need to set up new environments from a database dump. An example
+									would be starting your dev site from scratch, then creating both test and live sites from dumps of the dev
+									database. This ensures the sites UUID's will match
+								</p>
+							</li>
+						</ul>
+					</section>
+					<section>
+						<strong>Configuration stores</strong>
+						<ul>
+							<li>
+								<p>The active configuration store is the one that is currently in use</p>
+							</li>
+							<li>
+								<p>When you first install Drupal, this is the database.</p>
+							</li>
+							<li>
+								<p>When you export your configuration, you're exporting settings in the database to the file system, or from one store to another</p>
+							</li>
+							<li>
+								<p>The active configuration store is configurable, letting you swap it out as needed (Redis, MongoDB, etc)</p>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<strong>There are two types of configuration:</strong>
+						<ul>
+							<li>
+								<p>Simple: Used to store data that will only ever have one copy or version</p>
+							</li>
+							<li>
+								<p>
+									Configuration Entities: Used to store more complex data. There can be many instances of a single configuration
+									entity. Some examples are views, content types, and image styles.
+								</p>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<strong>Sites own configuration, not modules</strong>
+						<ul>
+							<li>
+								<p>
+									Modules and themes can provide default configuration that is imported when they are first installed. This is found in a
+									a module's config/install directory.
+								</p>
+							</li>
+							<li>
+								<p>
+									Future updates to a modules yml files will have no affect. In order to update default config for a pre-installed
+									module, you need to make the changes in a update hook (or uninstall / reinstall the module).
+								</p>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<p>
+							In Drupal 7, all variables were global (think vset and vget), which means that they were loaded into memory on every page load.
+							In Drupal 8, these variables are only loaded into memory when they are needed.
+						</p>
+					</section>
 
 				</section>
 
+				<section>
+
+					<h3>CMS Tips</h3>
+					<section>
+						<p>
+							It's still possible to override configuration in settings.php via the
+							<a href="https://www.drupal.org/node/1928898">Configuration Override System</a>
+						</p>
+					</section>
+					<section>
+						<p>
+							By default, Drupal sets up a configuration sync folder (fill in path) on install, but you can change the location
+							by overriding it in settings.php
+						</p>
+						<pre>
+							<code>$config_directories = array(CONFIG_SYNC_DIRECTORY => '../config/sync');</code>
+						</pre>
+					</section>
+
+
+				</section>
+
+				<section>
+					<h3>Useful configuration related modules</h3>
+					<ul>
+						<li><a href="https://www.drupal.org/project/config_update">Configuration Update Manager</a></li>
+						<li><a href="https://www.drupal.org/project/config_tools">Configuration Tools</a></li>
+						<li><a href="https://www.drupal.org/project/config_sync">Configuration Synchronizer</a></li>
+						<li><a href="https://www.drupal.org/project/config_devel">Configuration Development</a></li>
+						<li><a href="https://www.drupal.org/project/config_readonly">Configuration Read Only</a></li>
+						<li><a href="https://www.drupal.org/project/config_installer">Configuration Installer</a></li>
+						<li><a href="https://www.drupal.org/project/diff">Diff (I think)</a></li>
+					</ul>
+				</section>
+
+				<section>
+					<h3>Sources</h3>
+					<section>
+						<ul>
+							<li><a href="https://www.lullabot.com/articles/configuration-management-in-drupal-8-the-key-concepts">Key Concepts of config system - Lullabot</a></li>
+							<li><a href="https://www.drupal.org/node/1667894">Config API Overview - D.O</a></li>
+							<li><a href="https://www.drupal.org/docs/8/configuration-management/managing-your-sites-configuration">Managing Your Site’s Configuration - D.O</a></li>
+							<li><a href="https://www.lullabot.com/podcasts/drupalizeme-podcast/the-new-drupal-8-configuration-system">The New Drupal 8 Configuration System - Lullabot Podcast</a></li>
+							<li><a href="https://api.drupal.org/api/drupal/core%21core.api.php/group/config_api/8.2.x">Configuration API overview page - D.O</a></li>
+							<li><a href="https://www.drupal.org/docs/8/api/configuration-api">Another config API overview page - D.O</a></li>
+							<li><a href="https://groups.drupal.org/node/191283">Config Management architecture (this is pretty out of date, but still useful)</a></li>
+						</ul>
+					</section>
+					<section>
+						<ul>
+							<li><a href="https://www.phase2technology.com/blog/using-and-abusing-the-configuration-management-module-for-drupal-7/">Using and abusing the configuration management system</a></li>
+							<li><a href="https://events.drupal.org/neworleans2016/sessions/drupal-8-features-vs-configuration-management">Config mngmt vs features session</a></li>
+							<li><a href="https://www.drupal.org/node/1905070">Configuration Cheat Sheat</a></li>
+							<li><a href="https://www.drupal.org/node/1809490">Simple config api</a></li>
+							<li><a href="https://www.amazeelabs.com/en/blog/drupal8-configuration-management-part2">Amazee Article (keep reading this)</a></li>
+							<li><a href="https://www.drupal.org/docs/8/creating-custom-modules/include-default-configuration-in-your-drupal-8-module">Default module configuration</a></li>
+						</ul>
+					</section>
+				</section>
 
 
 
