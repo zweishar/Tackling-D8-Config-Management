@@ -182,8 +182,6 @@
 					</section>
 				</section>
 
-				
-
 				<section>
 					<h3>Things you should know about the CMS</h3>
 
@@ -219,21 +217,6 @@
 						</ul>
 					</section>
 					<section>
-						<strong>There are two types of configuration:</strong>
-						<ul>
-							<li>
-								<p>Simple: Used to store data that will only ever have one copy or version, like your site name.</p>
-							</li>
-							<li>
-								<p>
-									Configuration Entities: Used to store more complex data. There can be many instances of a single configuration
-									entity. Some examples are views, content types, and image styles.
-								</p>
-							</li>
-						</ul>
-					</section>
-
-					<section>
 						<strong>Sites own configuration, not modules</strong>
 						<ul>
 							<li>
@@ -266,6 +249,28 @@
 							In Drupal 7, all variables were global (think vset and vget), which means that they were loaded into memory on every page load.
 							In Drupal 8, these variables are only loaded into memory when they are needed.
 						</p>
+					</section>
+
+				</section>
+
+				<section>
+					<h3>Configuration Entities</h3>
+					<section>
+						<strong>There are two types of configuration:</strong>
+						<ul>
+							<li>
+								<p>Simple: Used to store data that will only ever have one copy or version, like your site name.</p>
+							</li>
+							<li>
+								<p>
+									Configuration Entities: Used to store more complex data. There can be many instances of a single configuration
+									entity. Some examples are views, content types, and image styles.
+								</p>
+							</li>
+						</ul>
+					</section>
+					<section>
+						<strong>Drupal 8 will try to calculate and update your configuration's dependencies on synchronization, uninstallation and installation. Learn more <a href="https://api.drupal.org/api/drupal/core!lib!Drupal!Core!Config!Entity!ConfigDependencyManager.php/class/ConfigDependencyManager/8.2.x">here</a></strong>
 					</section>
 
 				</section>
