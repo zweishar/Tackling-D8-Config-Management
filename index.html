@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>Tackling D8 Config Management</title>
+		<title>Configuration Management: Tips, Tricks & Perspective</title>
 
 		<link rel="stylesheet" href="css/reveal.css">
 		<link rel="stylesheet" href="css/theme/solarized.css">
@@ -26,26 +26,36 @@
 			<div class="slides">
 
 				<section>
-					<h2>Tackling Config Management in Drupal 8</h2>
+					<h2>Configuration Management: Tips, Tricks & Perspective</h2>
 					<br />
 					<p>By Zach Weishar</p>
 				</section>
 
 				<section>
-					<strong>Configuration Management means taking control of your database in order to reliably manage change.</strong>
+						<img data-src="img/isovera_logo.svg" style="border:none; width: 500px; background-color: #1E3F75; padding: 50px 150px;" />
+				</section>
+
+				<section>
+					<strong>Configuration Management allows you to take granular control of your database in order to reliably manage change.</strong>
 				</section>
 
 				<section>
 					<h3>What can config managment do for you?</h3>
 					<section>
-						<p>Traditionally, Drupal is composed of two parts:</p>
-						<div style="float:left; margin-left: 25%;">
+						<p>Traditionally, there are three seperate but interdependent peices of Drupal:</p>
+						<div style="margin:0 auto; width: 500px;">
+							<div style="float:left;">
 							<p>Code</p>
-							<img data-src="img/code.svg" style="border:none;"/>
+							<img data-src="img/code.svg" style="border:none; height:100px;"/>
 						</div>
-						<div style="float:right; margin-right: 25%;">
+						<div style="float:left; margin-left: 30px;">
 							<p>Database</p>
-							<img data-src="img/database-1.svg" style="border:none;"/>
+							<img data-src="img/database-1.svg" style="border:none; height:100px;"/>
+						</div>
+						<div style="float:left; margin-left: 30px;">
+							<p>Filesystem</p>
+							<img data-src="img/file_system.svg" style="border:none; height:100px;" />
+						</div>
 						</div>
 					</section>
 					<section>
@@ -74,6 +84,11 @@
 						</p>
 					</section>
 					<section>
+						<video width="900" controls>
+  						<source src="video/ui-db-file.mp4" type="video/mp4">
+						</video>
+					</section>
+					<section>
 						<strong>This is valuable because:</strong>
 						<ul>
 							<li>
@@ -85,9 +100,19 @@
 						</ul>
 					</section>
 					<section>
+						<video width="900" controls>
+  						<source src="video/deploy-dev-prod.mp4" type="video/mp4">
+						</video>
+					</section>
+					<section>
 						<strong>If you're using config managment, you are essentially putting your database under version control!</strong>
 						<br />
 						<strong>(Not totally accurate, but pretty close)</strong>
+					</section>
+					<section>
+						<video width="900" controls>
+  						<source src="video/revert-config-update.mp4" type="video/mp4">
+						</video>
 					</section>
 				</section>
 
@@ -101,14 +126,12 @@
 						<ul>
 							<li>
 								<p>
-									It lives in the contrib space, which means there is no centralized API in core for module developers to
-									expose their configuration. You can use either Entity API Exportables or Ctools Exportables.
+									It lives in the contrib space, which means there is no centralized API in core for module developers to expose their configuration. For example you can use either Entity API Exportables or Ctools Exportables.
 								</p>
 							</li>
 							<li>
 								<p>
-									Features was designed to bundle up small chunks of descrete site functionality, not act as full
-									configuration store for a complex site.
+									Features was designed to bundle up small chunks of descrete site functionality, not act as full configuration store for a complex site.
 								</p>
 							</li>
 						</ul>
@@ -116,17 +139,40 @@
 					<section>
 						<strong>Working with features can be frustrating:</strong>
 						<ul>
-							<li><p>Configuration often becomes spread between multiple features modules, which makes it hard to keep track of.</p></li>
-							<li><p>Features modules can have interlocking dependencies, which can make changes harder down the road.</p></li>
-							<li><p>Resolving merge conflicts in large features modules is tedious and error prone.</p></li>
+							<li>
+								<p>Configuration often becomes spread between multiple features modules, which makes it hard to keep track of.</p>
+							</li>
+							<li>
+								<p>Features modules can have interlocking dependencies, which can make changes harder down the road.</p>
+							</li>
+						</ul>
+					</section>
+					<section>
+						<strong>Working with features can be frustrating:</strong>
+						<ul>
+							<li>
+								<p>Resolving merge conflicts in large features modules is tedious and error prone.</p>
+							</li>
+							<li>
+								<p>Features can create things, but it can't really delete them. You have to write an update hook to remove fields from the database, and also remove them from the feature's code.</p>
+							</li>
 						</ul>
 					</section>
 					<section>
 						<strong>Drupal 8 addresses these issues:</strong>
 						<ul>
-							<li><p>There is a centralized configuration API in Drupal 8 core.</p></li>
-							<li><p>All of you configuration now leaves cleanly in your configuration sync directory.</p></li>
-							<li><p>Resolving merge conflicts is a lot easier because we have a bunch of small files instead of one large one, and the file format is yaml.</p></li>
+							<li>
+								<p>There is a centralized configuration API in Drupal 8 core.</p>
+							</li>
+							<li>
+								<p>All of you configuration now lives cleanly in your configuration sync directory.</p>
+							</li>
+							<li>
+								<p>Resolving merge conflicts is a lot easier because we have a bunch of small files instead of one large one, and the file format is yaml which is easier to read.</p>
+							</li>
+							<li>
+								<p>The CMS is capable of deleting fields.</p>
+							</li>
 						</ul>
 					</section>
 					<section>
@@ -138,16 +184,6 @@
 					<h3>What is considered configuration in Drupal 8?</h3>
 					<section>
 						<p>There are four main categories of data in Drupal 8</p>
-					</section>
-					<section>
-						<strong>Content:</strong>
-						<p>
-							Information meant to be displayed on your site: articles, basic pages, images, files,
-							custom blocks, etc. Content is stored and accessed using
-							<a href="https://api.drupal.org/api/drupal/core%21lib%21Drupal%21Core%21Entity%21entity.api.php/group/entity_api/8.2.x">
-								Content Entities.
-							</a>
-						</p>
 					</section>
 					<section>
 						<strong>State:</strong>
@@ -173,6 +209,16 @@
 						</p>
 					</section>
 					<section>
+						<strong>Content:</strong>
+						<p>
+							Information meant to be displayed on your site: articles, basic pages, images, files,
+							custom blocks, etc. Content is stored and accessed using
+							<a href="https://api.drupal.org/api/drupal/core%21lib%21Drupal%21Core%21Entity%21entity.api.php/group/entity_api/8.2.x">
+								Content Entities.
+							</a>
+						</p>
+					</section>
+					<section>
 						<strong>Configuration:</strong>
 						<p>
 							Information about your site that is generally (or at least can be) human-edited, but is not content, and is
@@ -180,8 +226,34 @@
 						</p>
 						<p>Examples: the name of your site, the content types and views you have defined.</p>
 					</section>
+					<section>
+						<strong>Configuration vs Content</strong>
+						<ul>
+							<li>
+								<p>Content is created by site authors and configuration is created by site builders.</p>
+							</li>
+							<li>
+								<p>Configuration = types of things and content = things. Article content type vs article nodes.</p>
+							</li>
+						</ul>
+					</section>
+					<section>
+						<strong>Grey Areas</strong>
+						<ul>
+							<li>
+								<p>Blocks are content, but block placement is configuration.</p>
+							</li>
+							<li>
+								<p>Menus are configuration, menu items are content.</p>
+							</li>
+						</ul>
+					</section>
+					<section>
+					<video width="900" controls>
+  						<source src="video/broken-block.mp4" type="video/mp4">
+						</video>
 				</section>
-
+				</section>
 				<section>
 					<h3>Things you should know about the CMS</h3>
 
@@ -203,18 +275,10 @@
 						</ul>
 					</section>
 					<section>
-						<strong>Configuration stores</strong>
-						<ul>
-							<li>
-								<p>The active configuration store is the one that is currently in use. When you first install Drupal, this is the database.</p>
-							</li>
-							<li>
-								<p>When you export your configuration, you're exporting settings in the database to the file system, or from one store to another.</p>
-							</li>
-							<li>
-								<p>The active configuration store is configurable, letting you swap it out as needed for other backends like Redis or MongoDB.</p>
-							</li>
-						</ul>
+						<img data-src="img/sync-diff-sites.png" />
+					</section>
+					<section>
+						<img data-src="img/sync-diff-sites-cli.png" />
 					</section>
 					<section>
 						<strong>Sites own configuration, not modules</strong>
@@ -243,52 +307,52 @@
 							</li>
 						</ul>
 					</section>
-
+					<section>
+						<strong>Dependency Calculation</strong>
+						<p>Drupal sites are often complex, and have many interlocking dependencies. Dependency calculation tries to prevent you from accidently breaking your site by warning you before you delete or remove a component that's needed somewhere else.</p>
+					</section>
+					<section>
+						<video width="900" controls>
+  						<source src="video/dependency_calculation.mp4" type="video/mp4">
+						</video>
+					</section>
+					<section>
+						<strong>Configuration stores</strong>
+						<ul>
+							<li>
+								<p>The active configuration store is the one that is currently in use. When you first install Drupal, this is the database.</p>
+							</li>
+							<li>
+								<p>When you export your configuration, you're exporting settings in the database to the file system, or from one store to another.</p>
+							</li>
+							<li>
+								<p>The active configuration store is configurable, letting you swap it out as needed for other backends like Redis or MongoDB.</p>
+							</li>
+						</ul>
+					</section>
 					<section>
 						<p>
 							In Drupal 7, all variables were global (think vset and vget), which means that they were loaded into memory on every page load.
 							In Drupal 8, these variables are only loaded into memory when they are needed.
 						</p>
 					</section>
-
+					<section>
+					<strong>Configuration Entities:</strong>
+					<ul>
+						<li>
+							<p>Simple: Used to store data that will only ever have one copy or version, like your site name.</p>
+						</li>
+						<li>
+							<p>
+								Configuration Entities: Used to store more complex data. There can be many instances of a single configuration
+								entity. Some examples are views, content types, and image styles.
+							</p>
+						</li>
+					</ul>
 				</section>
-
-				<section>
-					<h3>Configuration Entities</h3>
-					<section>
-						<strong>There are two types of configuration:</strong>
-						<ul>
-							<li>
-								<p>Simple: Used to store data that will only ever have one copy or version, like your site name.</p>
-							</li>
-							<li>
-								<p>
-									Configuration Entities: Used to store more complex data. There can be many instances of a single configuration
-									entity. Some examples are views, content types, and image styles.
-								</p>
-							</li>
-						</ul>
-					</section>
-					<section>
-						<strong>Drupal 8 will try to calculate and update your configuration's dependencies on synchronization, uninstallation and installation. Learn more <a href="https://api.drupal.org/api/drupal/core!lib!Drupal!Core!Config!Entity!ConfigDependencyManager.php/class/ConfigDependencyManager/8.2.x">here</a></strong>
-					</section>
-
 				</section>
-
 				<section>
-
-					<h3>CMS Tips</h3>
-					<section>
-						<ul>
-							<li>
-								<p>By default, your active configuration is overwritten with the data in your file system when you import configuration. This is destructive.</p>
-							</li>
-							<li>
-								<p>If you only want to import new configs and not delete untracked ones: <pre><code>drush config-import --partial</code></pre></p>
-							</li>
-							<li><p>To skip exporting configuration from certain modules (such as devel) use: <pre><code>drush config-export --skip-modules=devel</code></pre></li></p></li>
-						</ul>
-					</section>
+					<h3>Tips & Tricks</h3>
 					<section>
 						<p>
 							By default, Drupal sets up a configuration sync folder at a path like sites/default/files/config_really-long-uuid on install, but you can change the location
@@ -299,11 +363,49 @@
 						</pre>
 					</section>
 					<section>
-						<p>Don't blindly trust the config system. It's still a good idea to review your exports before committing importing.</p>
+						<ul>
+							<li>
+								<p>By default, your active configuration is overwritten with the data in your file system when you import configuration. This is destructive.</p>
+							</li>
+							<li>
+								<p>If you only want to import new configs and not delete untracked ones: <pre><code>drush config-import --partial</code></pre></p>
+							</li>
+						</ul>
 					</section>
-
+					<section>
+						<h1>WIP</h1>
+						<p>Show video of first doing an import that will delete, then using --partial to avoid this</p>
+					</section>
+					<section>
+						<ul>
+							<li><p>To skip exporting configuration from certain modules (such as devel) use: <pre><code>drush config-export --skip-modules=devel</code></pre></li></p></li>
+						</ul>
+					</section>
+					<section>
+						<h1>WIP</h1>
+						<p>Show video of skipping modules in config export</p>
+					</section>
+					<section>
+						<h1>WIP</h1>
+						<p>Add slides on config split</p>
+					</section>
+					<section>
+						<h1>WIP</h1>
+						<p>Add slides on ignoring certain configs all together (block placement). Describe the weirdness of block placement vs content and how to get around it.</p>
+					</section>
+					<section>
+						<h1>WIP</h1>
+						<p>Configuration installer</p>
+					</section>
+					<section>
+						<h1>WIP</h1>
+						<p>Configuration read only</p>
+					</section>
 				</section>
-
+				<section>
+					<h3>Example workflow</h3>
+					<p>No more videos, use diagrams to show the action</p>
+				</section>
 				<section>
 					<h3>Useful configuration related modules</h3>
 					<ul>
@@ -315,7 +417,6 @@
 						<li><a href="https://www.drupal.org/project/config_installer">Configuration Installer</a></li>
 					</ul>
 				</section>
-
 				<section>
 					<h3>Sources</h3>
 					<section>
