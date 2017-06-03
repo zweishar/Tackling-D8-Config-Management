@@ -30,17 +30,14 @@
 					<br />
 					<p>By Zach Weishar</p>
 				</section>
-
 				<section>
 						<img data-src="img/isovera_logo.svg" style="border:none; width: 500px; background-color: #1E3F75; padding: 50px 150px;" />
 				</section>
-
-				<section>
-					<strong>Configuration Management allows you to take granular control of your database in order to reliably manage change.</strong>
-				</section>
-
 				<section>
 					<h3>What can config managment do for you?</h3>
+					<section>
+						<strong>Configuration Management allows you to take granular control of your database in order to reliably manage change.</strong>
+					</section>
 					<section>
 						<p>Traditionally, there are three seperate but interdependent peices of Drupal:</p>
 						<div style="margin:0 auto; width: 500px;">
@@ -61,7 +58,7 @@
 					<section>
 						<p>
 							In order to effectivley manage change in your application,
-							you need a way to control the state of both of these pieces.
+							you need a way to control the state of these pieces.
 						</p>
 					</section>
 					<section>
@@ -154,7 +151,7 @@
 								<p>Resolving merge conflicts in large features modules is tedious and error prone.</p>
 							</li>
 							<li>
-								<p>Features can create things, but it can't really delete them. You have to write an update hook to remove fields from the database, and also remove them from the feature's code.</p>
+								<p>Features can create things, but it can't really delete them. You have to write an update hook to remove things from the database, and also remove them from the feature's code.</p>
 							</li>
 						</ul>
 					</section>
@@ -171,88 +168,13 @@
 								<p>Resolving merge conflicts is a lot easier because we have a bunch of small files instead of one large one, and the file format is yaml which is easier to read.</p>
 							</li>
 							<li>
-								<p>The CMS is capable of deleting fields.</p>
+								<p>The CMS is capable of deleting things.</p>
 							</li>
 						</ul>
 					</section>
 					<section>
 						<strong>In Drupal 8 features is not dead, but now it is free to fulfill its original purpose!</strong>
 					</section>
-				</section>
-
-				<section>
-					<h3>What is considered configuration in Drupal 8?</h3>
-					<section>
-						<p>There are four main categories of data in Drupal 8</p>
-					</section>
-					<section>
-						<strong>State:</strong>
-						<p>
-							Information of a temporary nature, generally machine-generated and not human-edited, about the current state of
-							your site.
-						</p>
-						<p>Examples: the time when cron was last run or whether node access permissions need rebuilding.</p>
-					</section>
-					<section>
-						<strong>It's state when:</strong>
-						<ul>
-							<li><p>The data is specific to an individual environment.</p></li>
-							<li><p>You will never want to deploy it between environments.</p></li>
-							<li><p>When you reset a system, you lose all state, but configuration persists.</p></li>
-						</ul>
-					</section>
-					<section>
-						<strong>Session:</strong>
-						<p>
-							Information about individual users' interactions with the site, such as whether they are logged in. This is really
-							"state" information, but it is not stored the same way so it's a separate type.
-						</p>
-					</section>
-					<section>
-						<strong>Content:</strong>
-						<p>
-							Information meant to be displayed on your site: articles, basic pages, images, files,
-							custom blocks, etc. Content is stored and accessed using
-							<a href="https://api.drupal.org/api/drupal/core%21lib%21Drupal%21Core%21Entity%21entity.api.php/group/entity_api/8.2.x">
-								Content Entities.
-							</a>
-						</p>
-					</section>
-					<section>
-						<strong>Configuration:</strong>
-						<p>
-							Information about your site that is generally (or at least can be) human-edited, but is not content, and is
-							meant to be relatively permanent.
-						</p>
-						<p>Examples: the name of your site, the content types and views you have defined.</p>
-					</section>
-					<section>
-						<strong>Configuration vs Content</strong>
-						<ul>
-							<li>
-								<p>Content is created by site authors and configuration is created by site builders.</p>
-							</li>
-							<li>
-								<p>Configuration = types of things and content = things. Article content type vs article nodes.</p>
-							</li>
-						</ul>
-					</section>
-					<section>
-						<strong>Grey Areas</strong>
-						<ul>
-							<li>
-								<p>Blocks are content, but block placement is configuration.</p>
-							</li>
-							<li>
-								<p>Menus are configuration, menu items are content.</p>
-							</li>
-						</ul>
-					</section>
-					<section>
-					<video width="900" controls>
-  						<source src="video/broken-block.mp4" type="video/mp4">
-						</video>
-				</section>
 				</section>
 				<section>
 					<h3>Things you should know about the CMS</h3>
@@ -337,10 +259,10 @@
 						</p>
 					</section>
 					<section>
-					<strong>Configuration Entities:</strong>
+					<strong>Types of Configuration:</strong>
 					<ul>
 						<li>
-							<p>Simple: Used to store data that will only ever have one copy or version, like your site name.</p>
+							<p>Simple Configuration: Used to store data that will only ever have one copy or version, like your site name.</p>
 						</li>
 						<li>
 							<p>
@@ -349,6 +271,77 @@
 							</p>
 						</li>
 					</ul>
+				</section>
+				</section>
+				<section>
+					<h3>What is considered configuration in Drupal 8?</h3>
+					<section>
+						<p>There are four main categories of data in Drupal 8</p>
+					</section>
+					<section>
+						<strong>State:</strong>
+						<p>
+							Information of a temporary nature, generally machine-generated and not human-edited, about the current state of
+							your site.
+						</p>
+						<p>Examples: the time when cron was last run or whether node access permissions need rebuilding.</p>
+					</section>
+					<section>
+						<strong>It's state when:</strong>
+						<ul>
+							<li><p>The data is specific to an individual environment.</p></li>
+							<li><p>You will never want to deploy it between environments.</p></li>
+							<li><p>When you reset a system, you lose all state, but configuration persists.</p></li>
+						</ul>
+					</section>
+					<section>
+						<strong>Session:</strong>
+						<p>
+							Information about individual users' interactions with the site, such as whether they are logged in. This is really
+							"state" information, but it is not stored the same way so it's a separate type.
+						</p>
+					</section>
+					<section>
+						<strong>Content:</strong>
+						<p>
+							Information meant to be displayed on your site: articles, basic pages, images, files,
+							custom blocks, etc.
+						</p>
+					</section>
+					<section>
+						<strong>Configuration:</strong>
+						<p>
+							Information about your site that is generally (or at least can be) human-edited, but is not content, and is
+							meant to be relatively permanent.
+						</p>
+						<p>Examples: the name of your site, the content types and views you have defined.</p>
+					</section>
+					<section>
+						<strong>Configuration vs Content</strong>
+						<ul>
+							<li>
+								<p>Content is created by site authors and configuration is created by site builders.</p>
+							</li>
+							<li>
+								<p>Configuration = types of things and content = things. Article content type vs article nodes.</p>
+							</li>
+						</ul>
+					</section>
+					<section>
+						<strong>Grey Areas</strong>
+						<ul>
+							<li>
+								<p>Blocks are content, but block placement is configuration.</p>
+							</li>
+							<li>
+								<p>Menus are configuration, menu items are content.</p>
+							</li>
+						</ul>
+					</section>
+					<section>
+					<video width="900" controls>
+  						<source src="video/broken-block.mp4" type="video/mp4">
+						</video>
 				</section>
 				</section>
 				<section>
@@ -373,8 +366,9 @@
 						</ul>
 					</section>
 					<section>
-						<h1>WIP</h1>
-						<p>Show video of first doing an import that will delete, then using --partial to avoid this</p>
+						<video width="900" controls>
+							<source src="video/partial_flag.mp4" type="video/mp4">
+						</video>
 					</section>
 					<section>
 						<ul>
@@ -382,29 +376,46 @@
 						</ul>
 					</section>
 					<section>
-						<h1>WIP</h1>
-						<p>Show video of skipping modules in config export</p>
+						<strong><p>Config Split</p></strong>
+						<ul>
+							<li>Move configurations that you specify out of your central configuration store (the one shared between all environments) and into split directories.</li>
+							<li>Different configurations for different environemnts. For instance, different caching settings on dev and prod.</li>
+						</ul>
 					</section>
 					<section>
-						<h1>WIP</h1>
-						<p>Add slides on config split</p>
+						<strong>Config Split</strong>
+						<video width="900" controls>
+  						<source src="video/config_split.mp4" type="video/mp4">
+						</video>
 					</section>
 					<section>
-						<h1>WIP</h1>
-						<p>Add slides on ignoring certain configs all together (block placement). Describe the weirdness of block placement vs content and how to get around it.</p>
+						<strong>Ignoring Specific Configurations</strong>
+						<img data-src="img/config_split_ignore.jpg" style="height: 400px;"/>
 					</section>
 					<section>
-						<h1>WIP</h1>
-						<p>Configuration installer</p>
+						<strong><p>Configuration read only</p></strong>
+						<img data-src="img/config_readonly.png" style="height: 400px; border: none;"/>
 					</section>
 					<section>
-						<h1>WIP</h1>
-						<p>Configuration read only</p>
+						<div>
+							<strong>Configuration Installer</strong>
+							<p>If you want to isntall a site from existing configuration, the Configuration Installer module has you covered.</p>
+						</div>
+					</section>
+					<section>
+						<img data-src="img/config-installer.png" />
+					</section>
+					<section>
+						<img data-src="img/config-installer-2.png" />
 					</section>
 				</section>
 				<section>
-					<h3>Example workflow</h3>
-					<p>No more videos, use diagrams to show the action</p>
+					<h2>Questions?</h2>
+				</section>
+				<section>
+					<p>Twitter: <a href="https://twitter.com/zachweishar">@ZachWeishar</a></p>
+					<p>Email: <a href="mailto:zweishar@isovera.com">zweishar@isovera.com</a></p>
+					<p>D.O: <a href="https://www.drupal.org/u/zweishar">zweishar</a></p>
 				</section>
 				<section>
 					<h3>Useful configuration related modules</h3>
@@ -439,11 +450,6 @@
 						</ul>
 					</section>
 				</section>
-
-				<section>
-					<h2>Questions?</h2>
-				</section>
-
 				<section>
 					<p>View Slides:</p>
 					<p><a href="https://zweishar.github.io/Tackling-D8-Config-Management/#/">https://zweishar.github.io/Tackling-D8-Config-Management/#/</a></p>
@@ -451,12 +457,6 @@
 					<p>Git Repo:</p>
 					<p><a href="https://github.com/zweishar/Tackling-D8-Config-Management">https://github.com/zweishar/Tackling-D8-Config-Management</a></p>
 				</section>
-
-				<section>
-					<p>Twitter: <a href="https://twitter.com/zachweishar">@ZachWeishar</a></p>
-					<p>Email: <a href="mailto:zweishar@isovera.com">zweishar@isovera.com</a></p>
-				</section>
-
 			</div>
 		</div>
 
