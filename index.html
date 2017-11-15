@@ -31,12 +31,26 @@
 					<p>By Zach Weishar</p>
 				</section>
 				<section>
-						<img data-src="img/isovera_logo.svg" style="border:none; width: 500px; background-color: #1E3F75; padding: 50px 150px;" />
+					<img data-src="img/isovera_logo.svg" style="border:none; width: 500px; background-color: #1E3F75; padding: 50px 150px;" />
 				</section>
 				<section>
-					<h3>What can config managment do for you?</h3>
+          <h3>What do we call it?</h3>
+          <section>
+            <ul>
+            	<li>CM: Configuration Managment</li>
+              <li>CMI: Configuration Managment Initiative</li>
+              <li>CMS: Configuration Managment System</li>
+              <li>CS: Configuration System</li>
+            </ul>
+          </section>
+          <section>
+            <img data-src="img/configuration_system.png" style="border:none;"/>
+          </section>
+        </section>
+        <section>
+					<h3>What can the Configuration System do for you?</h3>
 					<section>
-						<strong>Configuration Management allows you to take granular control of your database in order to reliably manage change.</strong>
+						<strong>Configuration management allows you to take granular control of your database in order to reliably manage change.</strong>
 					</section>
 					<section>
 						<p>Traditionally, there are three seperate but interdependent peices of Drupal:</p>
@@ -62,10 +76,7 @@
 						</p>
 					</section>
 					<section>
-						<p>
-							Managing change in code is relativley easy through the use of
-							a version control system (VCS), such as GIT.
-						</p>
+						<p>Managing change in code is a problem with a widely accepted solution. Version control systems, such as GIT, are very good at this.</p>
 					</section>
 					<section>
 						<p>
@@ -76,8 +87,7 @@
 					<section>
 						<p>
 							Configuration managment allows you to control the state
-							of your database by exporting its configuration to code which can be
-							managed in your VCS of choice.
+							of your database by exporting its configuration to the file system, which can be managed in your version control system of choice.
 						</p>
 					</section>
 					<section>
@@ -116,14 +126,14 @@
 				<section>
 					<h3>Where we came from</h3>
 					<section>
-						<p>In Drupal 7, configuration management is made possible by contributed modules, namely features and strong arm</p>
+						<p>In Drupal 7, configuration management is made possible by contributed modules, namely Features and Strongarm.</p>
 					</section>
 					<section>
-						<strong>This solution has treated us well for years, but it has some shortcomings:</strong>
+						<strong>This solution treated us well for years, but it has some shortcomings:</strong>
 						<ul>
 							<li>
 								<p>
-									It lives in the contrib space, which means there is no centralized API in core for module developers to expose their configuration. For example you can use either Entity API Exportables or Ctools Exportables.
+									It lives in the contrib space, which means there is no centralized API in core for module developers to expose their configuration. For example you could use either Entity API Exportables or Ctools Exportables.
 								</p>
 							</li>
 							<li>
@@ -137,7 +147,7 @@
 						<strong>Working with features can be frustrating:</strong>
 						<ul>
 							<li>
-								<p>Configuration often becomes spread between multiple features modules, which makes it hard to keep track of.</p>
+								<p>Configuration can become spread between multiple features modules, which makes it hard to keep track of.</p>
 							</li>
 							<li>
 								<p>Features modules can have interlocking dependencies, which can make changes harder down the road.</p>
@@ -165,10 +175,10 @@
 								<p>All of you configuration now lives cleanly in your configuration sync directory.</p>
 							</li>
 							<li>
-								<p>Resolving merge conflicts is a lot easier because we have a bunch of small files instead of one large one, and the file format is yaml which is easier to read.</p>
+								<p>Resolving merge conflicts is a lot easier because we have a bunch of small files instead of one large one.</p>
 							</li>
 							<li>
-								<p>The CMS is capable of deleting things.</p>
+								<p>The CS is capable of deleting things.</p>
 							</li>
 						</ul>
 					</section>
@@ -177,13 +187,13 @@
 					</section>
 				</section>
 				<section>
-					<h3>Things you should know about the CMS</h3>
+					<h3>Things you should know about the CS</h3>
 
 					<section>
 						<ul>
 							<li>
 								<p>
-									The CMS is designed to move configuration between different instances of the same site, not between two
+									The CS is designed to move configuration between different instances of the same site, not between two
 									separate sites.
 								</p>
 							</li>
@@ -200,10 +210,9 @@
 						<img data-src="img/sync-diff-sites.png" />
 					</section>
 					<section>
-						<img data-src="img/sync-diff-sites-cli.png" />
+						<img data-src="img/system.site.png" style="width: 100%;"/>
 					</section>
 					<section>
-						<strong>Sites own configuration, not modules</strong>
 						<ul>
 							<li>
 								<p>
@@ -214,17 +223,14 @@
 						</ul>
 					</section>
 					<section>
+						<img data-src="img/aggregator_config.png" />
+					</section>
+					<section>
 						<strong>Sites own configuration, not modules</strong>
 						<ul>
 							<li>
 								<p>
-									Updates to the files in the config/install or config/optional directories will have no affect on modules that are already
-									installed on your site because the site owns the configuration, not the module.
-								</p>
-							</li>
-							<li>
-								<p>
-									In order to update default config for a pre-installed module, you need to make the changes in a update hook (or uninstall / reinstall the module).
+									Updates to the files in the config/install or config/optional directories will have no affect on modules that are already installed.
 								</p>
 							</li>
 						</ul>
@@ -258,20 +264,6 @@
 							In Drupal 8, these variables are only loaded into memory when they are needed.
 						</p>
 					</section>
-					<section>
-					<strong>Types of Configuration:</strong>
-					<ul>
-						<li>
-							<p>Simple Configuration: Used to store data that will only ever have one copy or version, like your site name.</p>
-						</li>
-						<li>
-							<p>
-								Configuration Entities: Used to store more complex data. There can be many instances of a single configuration
-								entity. Some examples are views, content types, and image styles.
-							</p>
-						</li>
-					</ul>
-				</section>
 				</section>
 				<section>
 					<h3>What is considered configuration in Drupal 8?</h3>
@@ -390,7 +382,7 @@
 					</section>
 					<section>
 						<strong>Ignoring Specific Configurations</strong>
-						<img data-src="img/config_split_ignore.jpg" style="height: 400px;"/>
+						<img data-src="img/config_split_ignore.jpg" style="height: 400px; border: none;"/>
 					</section>
 					<section>
 						<strong><p>Configuration read only</p></strong>
@@ -408,6 +400,29 @@
 					<section>
 						<img data-src="img/config-installer-2.png" />
 					</section>
+					<section>
+						<p>Or you can use Drush:</p>
+						<pre style="width:auto;">
+							<code>drush config-set "system.site" uuid "d509ae31-254d-47b6-af0d-1d841352a8ff"</code>
+						</pre>
+					</section>
+					<section>
+						<video width="900" controls>
+  						<source src="video/defatul_content.mp4" type="video/mp4">
+						</video>
+					</section>
+					<section>
+						<img data-src="img/default_content_module.png" style="width: 100%;"/>
+					</section>
+					<section>
+						<strong>Caveats</strong>
+						<div>
+							<ul>
+								<li>Content is only imported when the module is enabled. Luckily there is a patch to allow for <a href="https://www.drupal.org/node/2640734">manual drush Imports</a></li>
+								<li>Error is thrown if content already exists. <a href="https://www.drupal.org/node/2698425">Here's a patch to solve that.</a></li>
+							</ul>
+						</div>
+					</section>
 				</section>
 				<section>
 					<h2>Questions?</h2>
@@ -418,17 +433,6 @@
 					<p>Twitter: <a href="https://twitter.com/zachweishar">@ZachWeishar</a></p>
 					<p>Email: <a href="mailto:zweishar@isovera.com">zweishar@isovera.com</a></p>
 					<p>D.O: <a href="https://www.drupal.org/u/zweishar">zweishar</a></p>
-				</section>
-				<section>
-					<h3>Useful configuration related modules</h3>
-					<ul>
-						<li><a href="https://www.drupal.org/project/config_update">Configuration Update Manager</a></li>
-						<li><a href="https://www.drupal.org/project/config_tools">Configuration Tools</a></li>
-						<li><a href="https://www.drupal.org/project/config_sync">Configuration Synchronizer</a></li>
-						<li><a href="https://www.drupal.org/project/config_devel">Configuration Development</a></li>
-						<li><a href="https://www.drupal.org/project/config_readonly">Configuration Read Only</a></li>
-						<li><a href="https://www.drupal.org/project/config_installer">Configuration Installer</a></li>
-					</ul>
 				</section>
 				<section>
 					<h3>Sources</h3>
