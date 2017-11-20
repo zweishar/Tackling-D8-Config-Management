@@ -30,8 +30,8 @@
 					<br />
 					<p>By Zach Weishar</p>
 				</section>
-				<section>
-					<img data-src="img/isovera_logo.svg" style="border:none; width: 500px; background-color: #1E3F75; padding: 50px 150px;" />
+				<section data-background-color="#204073">
+					<img data-src="img/isovera_logo.svg" style="border:none; width: 500px; box-shadow:none; background-color: #1E3F75; padding: 50px 150px;" />
 				</section>
 				<section>
           <h3>What do we call it?</h3>
@@ -76,18 +76,18 @@
 						</p>
 					</section>
 					<section>
-						<p>Managing change in code is a problem with a widely accepted solution. Version control systems, such as GIT, are very good at this.</p>
+						<p>Managing change in code is a problem with a widely accepted solution. Version control systems, such as Git, are very good at this.</p>
 					</section>
 					<section>
 						<p>
-							Unfortunatley the same is not true for the database. This is where
+							Unfortunatley, the same is not true for the database. This is where
 							configuration mangment comes into play.
 						</p>
 					</section>
 					<section>
 						<p>
 							Configuration managment allows you to control the state
-							of your database by exporting its configuration to the file system, which can be managed in your version control system of choice.
+							of your database by exporting its configuration to code, which can be managed in your version control system of choice.
 						</p>
 					</section>
 					<section>
@@ -99,7 +99,7 @@
 						<strong>This is valuable because:</strong>
 						<ul>
 							<li>
-								<p>You can easily deploy database updates between environments in the same way that you deploy code updates</p>
+								<p>You can easily deploy database updates between environments in the same way that you deploy code updates.</p>
 							</li>
 							<li>
 								<p>You never loose vital changes to your database because its history is managed by your VCS.</p>
@@ -133,12 +133,12 @@
 						<ul>
 							<li>
 								<p>
-									It lives in the contrib space, which means there is no centralized API in core for module developers to expose their configuration. For example you could use either Entity API Exportables or Ctools Exportables.
+									It lives in the contrib space, which means there is no centralized API in core for module developers to expose their configuration. For example, you could use either Entity API Exportables or Ctools Exportables.
 								</p>
 							</li>
 							<li>
 								<p>
-									Features was designed to bundle up small chunks of descrete site functionality, not act as full configuration store for a complex site.
+									Features was designed to bundle up small chunks of descrete site functionality, not to act as full configuration store for a complex site.
 								</p>
 							</li>
 						</ul>
@@ -161,7 +161,7 @@
 								<p>Resolving merge conflicts in large features modules is tedious and error prone.</p>
 							</li>
 							<li>
-								<p>Features can create things, but it can't really delete them. You have to write an update hook to remove things from the database, and also remove them from the feature's code.</p>
+								<p>Features can create things, but it can't really delete them. You have to write an update hook to remove things from the database, and also remove them from the features code.</p>
 							</li>
 						</ul>
 					</section>
@@ -183,7 +183,7 @@
 						</ul>
 					</section>
 					<section>
-						<strong>In Drupal 8 features is not dead, but now it is free to fulfill its original purpose!</strong>
+						<strong>In Drupal 8, features is not dead. Now it is free to fulfill its original purpose!</strong>
 					</section>
 				</section>
 				<section>
@@ -199,9 +199,7 @@
 							</li>
 							<li>
 								<p>
-									What this means is that you need to set up new environments from a database dump. An example
-									would be starting your dev site from scratch, then creating both test and live sites from dumps of the dev
-									database. This ensures the sites UUID's will match.
+									What this means is that you should set up new environments from a database dump of an existing enivronment. This ensures the site's UUID's will match.
 								</p>
 							</li>
 						</ul>
@@ -216,8 +214,7 @@
 						<ul>
 							<li>
 								<p>
-									Modules and themes can provide default configuration that is imported when they are first installed. This is found in a
-									a module's config/install or config/optional directory.
+									Modules and themes can provide default configuration that is imported when they are installed. These configurations are found in a module's config/install or config/optional directory.
 								</p>
 							</li>
 						</ul>
@@ -237,7 +234,7 @@
 					</section>
 					<section>
 						<strong>Dependency Calculation</strong>
-						<p>Drupal sites are often complex, and have many interlocking dependencies. Dependency calculation tries to prevent you from accidently breaking your site by warning you before you delete or remove a component that's needed somewhere else.</p>
+						<p>Drupal sites are often complex and have many interlocking dependencies. Dependency calculation tries to prevent you from accidently breaking your site by warning you before you delete or remove a component that's needed somewhere else.</p>
 					</section>
 					<section>
 						<video width="900" controls>
@@ -276,7 +273,7 @@
 							Information of a temporary nature, generally machine-generated and not human-edited, about the current state of
 							your site.
 						</p>
-						<p>Examples: the time when cron was last run or whether node access permissions need rebuilding.</p>
+						<p><strong>Examples:</strong> the time when cron was last run or whether node access permissions need rebuilding.</p>
 					</section>
 					<section>
 						<strong>It's state when:</strong>
@@ -364,7 +361,7 @@
 					</section>
 					<section>
 						<ul>
-							<li><p>To skip exporting configuration from certain modules (such as devel) use: <pre><code>drush config-export --skip-modules=devel</code></pre></li></p></li>
+							<li><p>To skip exporting configuration from certain modules use: <pre><code>drush config-export --skip-modules=devel</code></pre></li></p></li>
 						</ul>
 					</section>
 					<section>
@@ -391,7 +388,7 @@
 					<section>
 						<div>
 							<strong>Configuration Installer</strong>
-							<p>If you want to isntall a site from existing configuration, the Configuration Installer module has you covered.</p>
+							<p>If you want to install a site from existing configuration, the Configuration Installer module has you covered.</p>
 						</div>
 					</section>
 					<section>
